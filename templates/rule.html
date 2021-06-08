@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子傑圖書室</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+            integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/book.css">
+    <script src="../static/book.js"></script>
+    <script src="../static/message.js"></script>
+</head>
+<body>
+<div class="all">
+    <div class="top_nav container">
+        <div class="row-12 fs-1">
+            <a href="/" style="text-decoration:none;">子傑圖書館</a>
+        </div>
+        <form class="row justify-content-end" action="">
+            <div class="col-auto">
+                <label for="">帳號</label>
+                <input type="count">
+            </div>
+            <div class="col-auto">
+                <label for="">密碼</label>
+                <input type="password">
+            </div>
+            <div class="col-auto align-self-end">
+                <input type="submit" value="登入">
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="menu row">
+            <div class="col-3 text-center fs-2">
+                <a href="/mybook" style="text-decoration:none;">我的書房</a>
+            </div>
+            <div class="col-3 text-center fs-2">
+                <a href="/search" style="text-decoration:none;">書籍查詢</a>
+            </div>
+            <div class="col-3 text-center fs-2">
+                <a href="about" style="text-decoration:none;">關於我們</a>
+            </div>
+            <div class="col-3 text-center fs-2">
+                <a href="/rule" style="text-decoration:none;">借書規章</a>
+            </div>
+        </div>
+    </div>
+    <div class="left_content">
+        <br/>
+        <p><span class="bold">第一條&nbsp;&nbsp;</span>本館所藏圖書資料，以供本校教職員工及學生參考研究使用為原則，惟校友暨退休人員如因教學研究參考需要時，得依本規則辦理。</p>
+        <p><span
+                class="bold">第二條&nbsp;&nbsp;</span>凡本校教職員工憑本校所發之服務證，學生憑學生證，校友、退休人員、研究助理、國語中心、進修推廣學院學員及現服務於本校之其他身分人員得向本館申請核發借書證借閱圖書，申請辦法如下：
+        </p>
+        <ol>
+            <li>校友憑校友證、畢業證書(含僑先部結業證書)經繳保證金及年費申請辦理。</li>
+            <li>退休人員需持退休證明、一吋照片一張，親自至本館填寫申請表，辦理借書證。</li>
+            <li>各單位奉准之核聘人員憑證明文件正本、保證書、身分證正本、一吋照片一張，親自至本館填寫申請表。</li>
+            <li>
+                校友、退休人員、研究助理、無服務證之其他身分人員，除校友持師大人認同卡外，均需繳交保證金新台幣貳千元。校友並需每年繳交圖書資料使用費新台幣壹千元整。國語中心及進修推廣學院學分班學員繳交圖書資料使用費每期(三個月)新台幣參百元整。
+            </li>
+            <li>持證人不需使用時，得繳回借書證，無息領回保證金。</li>
+            <li>辦證後至少需使用一年方得退證。</li>
+        </ol>
+        <p><span class="bold">第三條&nbsp;&nbsp;</span>借閱冊數及期限相關規定如</p>
+        <p><span class="bold">第四條&nbsp;&nbsp;</span>所借圖書若無其他讀者預約，可自行於線上辦理續借；續借以一次為限。</p>
+        <p><span class="bold">第五條&nbsp;&nbsp;</span>借閱期間若有其他讀者預約，借閱人應於本館寄發「催還通知單」十四天內歸還該書；若逾期未還，則比照本規則第十條繳交滯還金。</p>
+        <p><span
+                class="bold">第六條&nbsp;&nbsp;</span>借書人欲借之書如已出借，可自行於線上辦理預約。並於本館寄發「預約書到館通知單」電子郵件七天內辦理借書，逾期不予保留；借閱人借閱預約書時，若該書還有人預約，則借期縮短為十四天，借閱人應依規定於到期日前歸還。
+        </p>
+        <p><span class="bold">第七條&nbsp;&nbsp;</span>凡珍貴圖書、教師指定參考書、參考工具書、博碩士論文及期刊等限制館內閱覽之資料，概不出借。</p>
+        <p><span class="bold">第八條&nbsp;&nbsp;</span>本館遇有書庫清點整理圖書時，得公告暫停借閱。</p>
+        <p><span class="bold">第九條&nbsp;&nbsp;</span>借出圖書如有遺失或污損情事，借書人須賠償原圖書資料，如無法購得原書，依下列方式處理：</p>
+        <ol>
+            <li>以資料賠抵<br> <span class="list">圖書或期刊應以同一版本或新版抵賠，視聽資料應以原授權播放型式抵賠。</span><br> <span
+                    class="list">抵賠之資料須合於著作權法之規定，且不得有圈點、批註、污漬、折角、撕破等情形。</span><br> <span
+                    class="list">附件資料以原版抵賠，若為新版，則隨主體資料一併抵賠。</span></li>
+            <li>以現金賠抵<br> <span class="list">有價格可查詢者，以本館記錄之購入價格，依物價指數換算其時價後之三倍賠償之。</span><br> <span
+                    class="list">無法查得購入價格者，以頁數計價，中文圖書每頁三元，外文圖書每頁十元；無法查得頁數者，每冊一律以三百頁計算。</span></li>
+            <li>特殊版本及印刷特殊之藝術畫冊等，不適用前項現金賠償之方式，另以專案辦理賠償。</li>
+            <li>任何方式之賠償，每冊(件)圖書資料須另計處理費新台幣壹佰元整。</li>
+            <li>
+                遺失圖書資料須向館藏單位掛失，以現金賠償者，應於到期日後兩週內完成賠償手續；以圖書賠償者，國內出版資料應於到期日後兩週內，國外出版資料應於到期日後四個月以內完成賠償手續；逾期辦理者，視同逾期還書，加計逾期滯還金。
+            </li>
+        </ol>
+        <p><span class="bold">第十條&nbsp;&nbsp;</span>借出圖書與預約催還圖書均應如期歸還。否則每逾一日應課以每冊(件)滯還金新臺幣伍元，並凍結其再借閱權利至圖書歸還為止。</p>
+        <p><span class="bold">第十一條&nbsp;&nbsp;</span>服務證或借書證限本人使用，不得轉借他人，否則一經發覺，本館即停止其借閱權六週，並追還所借圖書。</p>
+        <p><span
+                class="bold">第十二條&nbsp;&nbsp;</span>服務證、學生證或借書證等應妥為保管，如有遺失，須立即向本館聲明掛失，由本館補發借書證者，須繳交工本費新臺幣貳佰元。掛失前本館所蒙受之損失，由原持證者負責賠償。
+        </p>
+        <p><span
+                class="bold">第十三條&nbsp;&nbsp;</span>本館圖書未經完成辦理借出登記手續而自行攜帶出館，經被發現確認屬實者，視同竊書論，本館停止其該學期借書權利，收回借書證。學生移請學務處議處，教職員工移請人事室處理。校友暨退休人員沒入保證金。
+        </p>
+        <p><span class="bold">第十四條&nbsp;&nbsp;</span>借出圖書，未經本館許可，不得擅自翻印，如有違反著作權保護法者，讀者需自行負責。</p>
+        <p><span
+                class="bold">第十五條&nbsp;&nbsp;</span>教職員工退休、離職、出國進修、學生畢（結）業、休學、退學，均需還清借書及罰款。凡未辦妥上項手續者，教職員工緩發證明文件；學生緩發畢業證書或證明文件。
+        </p>
+        <p><span class="bold">第十六條&nbsp;&nbsp;</span>本規則經圖書館委員會議通過後實施，修正時亦同。</p>
+    </div>
+</div>
+</div>
+</body>
+
+</html>

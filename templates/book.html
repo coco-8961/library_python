@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子傑圖書室</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+            integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/book.css">
+    <script src="../static/book.js"></script>
+    <script src="../static/message.js"></script>
+</head>
+<body>
+<div class="all">
+    <div class="top_nav container">
+        <div class="row-12 fs-1">
+            <a href="/" style="text-decoration:none;">子傑圖書館</a>
+        </div>
+        <form class="row justify-content-end" action="">
+            <div class="col-auto">
+                <label for="">帳號</label>
+                <input type="count">
+            </div>
+            <div class="col-auto">
+                <label for="">密碼</label>
+                <input type="password">
+            </div>
+            <div class="col-auto align-self-end">
+                <input type="submit" value="登入">
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="menu row">
+            <div class="col-3 text-center fs-2">
+                <a href="/mybook" style="text-decoration:none;">我的書房</a>
+            </div>
+            <div class="col-3 text-center fs-2">
+                <a href="/search" style="text-decoration:none;">書籍查詢</a>
+            </div>
+            <div class="col-3 text-center fs-2">
+                <a href="about" style="text-decoration:none;">關於我們</a>
+            </div>
+            <div class="col-3 text-center fs-2">
+                <a href="/rule" style="text-decoration:none;">借書規章</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table class="book_table">
+            {% for data in itemData%}
+            <tbody>
+            <tr>
+                <td rowspan="8" class="book_table">
+                    <img src={{ url_for('static', filename= data[7]) }} + class="img-thumbnail" alt="...">
+                </td>
+            </tr>
+            <tr>
+                <th colspan="3" class="fs-2">{{data[1]}}</th>
+            </tr>
+            <tr>
+                <td>作者：</td>
+                <td>{{data[2]}}</td>
+            </tr>
+            <tr>
+                <td>語文：</td>
+                <td>{{data[3]}}</td>
+            </tr>
+            <tr>
+                <td>出版：</td>
+                <td>{{data[4]}}</td>
+            </tr>
+            <tr>
+                <td>ISBN：</td>
+                <td>{{data[5]}}</td>
+            </tr>
+            <tr>
+                <td>主題：</td>
+                <td>{{data[6]}}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        <section class="comment bg-light">
+            <div class="row " id="title">
+                <h2 class="col-auto">書籍評論區</h2>
+                <div class="col-auto align-self-center">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                        我要評論
+                    </button>
+                </div>
+            </div>
+            <div id="allmessage">
+                {% for data in comment%}
+                <div id="message">
+                    <div id="msg_id">{{data[0]}}</div>
+                    <div id="book_id">{{data[1]}}</div>
+                    <div id="msg_name">{{data[2]}}</div>
+                    <p id="msg_content">{{data[3]}}</p>
+
+                    <div class="row align-items-center">
+                        <div class="col-auto time align-bottom" id="msg_time">{{data[4]}}</div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-warning" id="bt_edit" data-bs-toggle="modal"
+                                    data-bs-target="#editModal">編輯
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger" id="bt_del">刪除</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div id="message">
+                    <div id="msg_name">
+                        王大明：
+                    </div>
+                    <p id="msg_content">
+                        鞋子 很好穿 尺寸剛剛好 下訂隔一天就收到貨了 出貨非常快 用卷折抵很划算☺️☺️☺️☺️☺️☺️☺️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
+                    </p>
+
+                    <div class="row align-items-center">
+                        <div class="col-2 time align-bottom" id="msg_time">
+                            2020/8/4 下午10:26:28
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-warning" id="bt_edit" data-bs-toggle="modal"
+                                    data-bs-target="#editModal">編輯
+                            </button>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-danger" id="bt_del">刪除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- -------------------- -->
+<!-- 新增的彈跳視窗 -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">新增留言</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">暱稱：</label>
+                        <input type="hidden" name="bookid" class="form-control" id="add_bookid"
+                               value={{itemData[0][0]}}>
+                        <input type="text" name="name" class="form-control" id="add_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">留言內容：</label>
+                        <textarea class="form-control" name="content" id="add_content"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addmsg">送出</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 編輯的彈跳視窗 -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">新增留言</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">暱稱：</label>
+                        <input type="hidden" name="bookid" class="form-control" id="add_bookid"
+                               value={{itemData[0][0]}}>
+                        <input type="text" name="name" class="form-control" id="edit_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">留言內容：</label>
+                        <textarea class="form-control" name="content" id="edit_content"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="editmsg">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
