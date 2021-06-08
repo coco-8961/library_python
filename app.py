@@ -23,10 +23,13 @@ def mybook():
 def search():
     searchkey = request.args.get("searchkey")
     with sqlite3.connect('database.db') as conn:
+        print(searchkey)
         cur = conn.cursor()
-        cur.execute("SELECT * FROM book where `name` LIKE '%s'", searchkey)
+        if (searchkey != None):
+            cur.execute("SELECT * FROM book where `name` LIKE ?", (f'%{searchkey}%',))
+        else:
+            cur.execute("SELECT * FROM book ")
         itemData = cur.fetchall()
-        print(itemData)
     return render_template("search.html", itemData=itemData)
 
 @app.route('/about')
