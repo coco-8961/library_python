@@ -29,6 +29,14 @@ c.execute('''create table comment
             time char(50)
         );''')
 c.execute("insert into comment values (1, 1, '1', '123你好美','2020/8/4 下午10:26:28'), (2, 2, '2', '234你好', '2020/6/5 下午10:26:28'), (3, 2, '3', '234你好', '2020/6/8 下午10:26:28')")
-
 conn.commit()
+
+c.execute('''CREATE TABLE users
+		(userId INTEGER PRIMARY KEY AUTOINCREMENT,
+		email char(255),
+        name char(255),
+    	password char(255)
+		);''')
+
+
 conn.close()

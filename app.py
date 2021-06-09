@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session,  redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
+
+app.secret_key = 'fkdjsafjdkfdlkjfadskjfadskljdsfklj'
 
 #Open database
 conn = sqlite3.connect('database.db')
@@ -9,11 +11,70 @@ c = conn.cursor()
 
 @app.route('/')
 def index():
+    if 'name' in session:
+        username = session['name']
+        loginTF = True
+    else:
+        username = ""
+        loginTF = False
+    print(session)
+    print(username)
+    print(loginTF)
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('SELECT * FROM book')
         itemData = cur.fetchall()
-    return render_template("index.html", itemData=itemData)
+    print(itemData)
+    return render_template("index.html", itemData=itemData, loginTF=loginTF, username=username)
+
+@app.route('/login', methods = ['POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        if is_valid(email, password):
+            return redirect(url_for('index'))
+        else:
+            error = 'Invalid UserId / Password'
+            print(error)
+            return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+   # remove the username from the session if it is there
+   session.pop('name', None)
+   return redirect(url_for('index'))
+
+
+@app.route("/adduser", methods = ['POST'])
+def adduser():
+    if request.method == 'POST':
+        #Parse form data
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+
+        with sqlite3.connect('database.db') as con:
+            cur = con.cursor()
+            cur.execute('INSERT INTO users (password, email, name) VALUES (?, ?, ?)', (password, email, name))
+            con.commit()
+
+        return redirect(url_for('index'))
+
+def is_valid(email, password):
+    con = sqlite3.connect('database.db')
+    cur = con.cursor()
+    cur.execute('SELECT name, email, password FROM users')
+    data = cur.fetchall()
+    for row in data:
+        if row[1] == email and row[2] == password:
+            session['name'] = row[0]
+            return True
+    return False
+
+@app.route('/register')
+def register():
+    return render_template("register.html")
 
 @app.route('/mybook')
 def mybook():
@@ -81,6 +142,8 @@ def add_comment():
         cur = conn.cursor()
         cur.execute('INSERT INTO comment(bookId, name, message, time) VALUES (?,?,?,?)', (bookId, name, message, time))
     return "add comment"
+
+
 
 if __name__== '__main__':
     app.run(debug=True)
