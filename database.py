@@ -39,4 +39,12 @@ c.execute('''CREATE TABLE users
 		);''')
 
 
+c.execute('''CREATE TABLE borrowList
+		(id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username char(255),
+		bookname char(255),
+        borrowTime char(255),
+    	returnTime char(255)
+		);''')
+
 conn.close()

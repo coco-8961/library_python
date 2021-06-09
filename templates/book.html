@@ -62,34 +62,51 @@
         <table class="book_table">
             {% for data in itemData%}
             <tbody>
-            <tr>
-                <td rowspan="8" class="book_table">
-                    <img src={{ url_for('static', filename= data[7]) }} + class="img-thumbnail" alt="...">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="3" class="fs-2">{{data[1]}}</th>
-            </tr>
-            <tr>
-                <td>作者：</td>
-                <td>{{data[2]}}</td>
-            </tr>
-            <tr>
-                <td>語文：</td>
-                <td>{{data[3]}}</td>
-            </tr>
-            <tr>
-                <td>出版：</td>
-                <td>{{data[4]}}</td>
-            </tr>
-            <tr>
-                <td>ISBN：</td>
-                <td>{{data[5]}}</td>
-            </tr>
-            <tr>
-                <td>主題：</td>
-                <td>{{data[6]}}</td>
-            </tr>
+                <tr>
+                    <td rowspan="9" class="book_table">
+                        <img src={{ url_for('static', filename= data[7]) }} + class="img-thumbnail" alt="...">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="3" class="fs-2">{{data[1]}}</th>
+                </tr>
+                <tr>
+                    <td>作者：</td>
+                    <td>{{data[2]}}</td>
+                </tr>
+                <tr>
+                    <td>語文：</td>
+                    <td>{{data[3]}}</td>
+                </tr>
+                <tr>
+                    <td>出版：</td>
+                    <td>{{data[4]}}</td>
+                </tr>
+                <tr>
+                    <td>ISBN：</td>
+                    <td>{{data[5]}}</td>
+                </tr>
+                <tr>
+                    <td>主題：</td>
+                    <td>{{data[6]}}</td>
+                </tr>
+
+                {% if data[8] == None %}
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-lg">借閱</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary btn-lg">還書</button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        <button type="button" class="btn btn-secondary btn-lg" disabled>已借出</button>
+                    </td>
+                </tr>
+                {% endif %}
             </tbody>
             {% endfor %}
         </table>

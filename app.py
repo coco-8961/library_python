@@ -143,7 +143,27 @@ def add_comment():
         cur.execute('INSERT INTO comment(bookId, name, message, time) VALUES (?,?,?,?)', (bookId, name, message, time))
     return "add comment"
 
+@app.route('/borrowBook',methods=['POST'])
+def borrowBook():
+    username = "柯建亨"
+    bookname = request.values['bookname']
+    borrowTime = request.values['time']
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute('UPDATE book SET status = ? where `name` = ?', (username, bookname))
+        cur.execute('INSERT INTO borrowList (username, bookname, borrowTime) VALUES (?, ?, ?)', (username, bookname, borrowTime))
+    return "borrowBook"+bookname
 
+@app.route('/returnBook',methods=['POST'])
+def returnBook():
+    username = "柯建亨"
+    bookname = request.values['bookname']
+    returnTime = request.values['time']
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute('UPDATE book SET status = ? where `name` = ?', (None, bookname))
+        cur.execute('UPDATE borrowList SET returnTime = ? where `bookname` = ?', (returnTime, bookname))
+    return "returnBook"+bookname
 
 if __name__== '__main__':
     app.run(debug=True)

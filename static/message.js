@@ -146,9 +146,5 @@ $(document).ready(function(){
         edit_msg.children("#msg_time").text(editmyDate);
     })
 
-    //搜尋
-    $("#search_bt").click(function(){
-        var searchkey = $('#searchkey').val();
-        console.log(searchkey);
-    })
+
 })

@@ -77,7 +77,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-9" id="book">
                 <h2>新書推薦</h2>
                 <section class="row row-cols-4">
                     {% for data in itemData%}
@@ -89,7 +89,7 @@
                             </div>
                         </a>
                         {% if data[8] == None %}
-                        <a href="#" class="btn btn-outline-primary">可借閱</a>
+                        <button type="button" class="btn btn-outline-primary" id="borrow_btn">借閱</button>
                         {% else %}
                         <button type="button" class="btn btn-outline-secondary" disabled>已借閱</button>
                         {% endif %}
