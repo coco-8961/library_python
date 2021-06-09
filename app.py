@@ -62,14 +62,14 @@ def adduser():
         return redirect(url_for('index'))
 
 def is_valid(email, password):
-    con = sqlite3.connect('database.db')
-    cur = con.cursor()
-    cur.execute('SELECT name, email, password FROM users')
-    data = cur.fetchall()
-    for row in data:
-        if row[1] == email and row[2] == password:
-            session['name'] = row[0]
-            return True
+    with sqlite3.connect('database.db') as con:
+        cur = con.cursor()
+        cur.execute('SELECT name, email, password FROM users')
+        data = cur.fetchall()
+        for row in data:
+            if row[1] == email and row[2] == password:
+                session['name'] = row[0]
+                return True
     return False
 
 @app.route('/register')
@@ -78,10 +78,26 @@ def register():
 
 @app.route('/mybook')
 def mybook():
-    return render_template("mybook.html")
+    if 'name' in session:
+        username = session['name']
+        loginTF = True
+    else:
+        username = ""
+        loginTF = False
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM borrowList')
+        itemData = cur.fetchall()
+    return render_template("mybook.html", itemData=itemData, loginTF=loginTF, username=username)
 
 @app.route('/search')
 def search():
+    if 'name' in session:
+        username = session['name']
+        loginTF = True
+    else:
+        username = ""
+        loginTF = False
     searchkey = request.args.get("searchkey")
     with sqlite3.connect('database.db') as conn:
         print(searchkey)
@@ -91,18 +107,36 @@ def search():
         else:
             cur.execute("SELECT * FROM book ")
         itemData = cur.fetchall()
-    return render_template("search.html", itemData=itemData)
+    return render_template("search.html", itemData=itemData, loginTF=loginTF, username=username)
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    if 'name' in session:
+        username = session['name']
+        loginTF = True
+    else:
+        username = ""
+        loginTF = False
+    return render_template("about.html", loginTF=loginTF, username=username)
 
 @app.route('/rule')
 def rule():
-    return render_template("rule.html")
+    if 'name' in session:
+        username = session['name']
+        loginTF = True
+    else:
+        username = ""
+        loginTF = False
+    return render_template("rule.html", loginTF=loginTF, username=username)
 
 @app.route('/book')
 def book():
+    if 'name' in session:
+        username = session['name']
+        loginTF = True
+    else:
+        username = ""
+        loginTF = False
     bookId = request.args.get("bookId")
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
@@ -110,7 +144,7 @@ def book():
         itemData = cur.fetchall()
         cur.execute('SELECT * FROM comment where `bookId`=? ORDER BY `commentId` DESC ', (bookId))
         comment = cur.fetchall()
-    return render_template("book.html", itemData=itemData, comment=comment)
+    return render_template("book.html", itemData=itemData, comment=comment, loginTF=loginTF, username=username)
 
 @app.route('/comment/delete',methods=['POST'])
 def delete_comment():
