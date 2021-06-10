@@ -51,10 +51,10 @@
         {% else %}
         <div class="row justify-content-end">
             <div class="col-auto">
-                {{username}} 你好~歡迎來到子傑圖書室
+                <span id="username">{{username}}</span> 你好~歡迎來到子傑圖書室
             </div>
             <div class="col-auto align-self-end">
-			    <a href="/logout">登出</a>
+                <a href="/logout">登出</a>
             </div>
         </div>
         {% endif %}
@@ -75,26 +75,59 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">書名</th>
-            <th scope="col">借閱日期</th>
-            <th scope="col">歸還日期</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for data in itemData%}
-        <tr>
-            <th scope="row">{{data[0]}}</th>
-            <td>{{data[2]}}</td>
-            <td>{{data[3]}}</td>
-            <td>{{data[4]}}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            <h2>未還得書</h2>
+            <table class="table" id="returntable">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">書名</th>
+                    <th scope="col">借閱日期</th>
+                    <th scope="col">歸還日期</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in itemData%}
+                <tr>
+                    {% if data[4] == None%}
+                    <th >{{data[0]}}</th>
+                    <td class="bookname">{{data[2]}}</td>
+                    <td>{{data[3]}}</td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="return_btn">還書</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <h2>借閱歷史</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">書名</th>
+                    <th scope="col">借閱日期</th>
+                    <th scope="col">歸還日期</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in itemData%}
+                <tr>
+                    <th scope="row">{{data[0]}}</th>
+                    <td>{{data[2]}}</td>
+                    <td>{{data[3]}}</td>
+                    <td>{{data[4]}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

@@ -51,10 +51,10 @@
         {% else %}
         <div class="row justify-content-end">
             <div class="col-auto">
-                {{username}} 你好~歡迎來到子傑圖書室
+                <span id="username">{{username}}</span> 你好~歡迎來到子傑圖書室
             </div>
             <div class="col-auto align-self-end">
-			    <a href="/logout">登出</a>
+                <a href="/logout">登出</a>
             </div>
         </div>
         {% endif %}
@@ -76,52 +76,59 @@
         </div>
     </div>
     <div class="container">
-        <table class="book_table">
+        <table class="book_table" id="booktable">
             {% for data in itemData%}
             <tbody>
-                <tr>
-                    <td rowspan="9" class="book_table">
-                        <img src={{ url_for('static', filename= data[7]) }} + class="img-thumbnail" alt="...">
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="3" class="fs-2">{{data[1]}}</th>
-                </tr>
-                <tr>
-                    <td>作者：</td>
-                    <td>{{data[2]}}</td>
-                </tr>
-                <tr>
-                    <td>語文：</td>
-                    <td>{{data[3]}}</td>
-                </tr>
-                <tr>
-                    <td>出版：</td>
-                    <td>{{data[4]}}</td>
-                </tr>
-                <tr>
-                    <td>ISBN：</td>
-                    <td>{{data[5]}}</td>
-                </tr>
-                <tr>
-                    <td>主題：</td>
-                    <td>{{data[6]}}</td>
-                </tr>
+            <tr>
+                <td rowspan="9" class="book_table">
+                    <img src={{ url_for('static', filename= data[7]) }} + class="img-thumbnail" alt="...">
+                </td>
+            </tr>
+            <tr>
+                <th colspan="3" class="fs-2 bookname">{{data[1]}}</th>
+            </tr>
+            <tr>
+                <td>作者：</td>
+                <td>{{data[2]}}</td>
+            </tr>
+            <tr>
+                <td>語文：</td>
+                <td>{{data[3]}}</td>
+            </tr>
+            <tr>
+                <td>出版：</td>
+                <td>{{data[4]}}</td>
+            </tr>
+            <tr>
+                <td>ISBN：</td>
+                <td>{{data[5]}}</td>
+            </tr>
+            <tr>
+                <td>主題：</td>
+                <td>{{data[6]}}</td>
+            </tr>
 
-                {% if data[8] == None %}
-                <tr>
-                    <td colspan="2">
-                        <button type="button" class="btn btn-primary" id="borrow_btn">借閱</button>
-                        <button type="button" hidden class="btn btn-secondary" id="return_btn">還書</button>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="2">
-                        <button type="button" class="btn btn-secondary btn-lg" disabled>已借出</button>
-                    </td>
-                </tr>
-                {% endif %}
+            {% if data[8] == username %}
+            <tr>
+                <td colspan="2">
+                    <button type="button" hidden class="btn btn-primary" id="borrow_btn">借閱</button>
+                    <button type="button" class="btn btn-secondary" id="return_btn">還書</button>
+                </td>
+            </tr>
+            {% elif data[8] == None %}
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" id="borrow_btn">借閱</button>
+                    <button type="button" hidden class="btn btn-secondary" id="return_btn">還書</button>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-secondary btn-lg" disabled>已借出</button>
+                </td>
+            </tr>
+            {% endif %}
             </tbody>
             {% endfor %}
         </table>

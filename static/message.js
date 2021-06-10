@@ -3,6 +3,11 @@ $(document).ready(function(){
     //新增
     $("#addmsg").click(function(){
         //取彈跳視窗input的值
+        username = $('#username').text();
+        if(username == ""){
+            alert('無法留言，請先登入');
+            return 0
+        }
         var bookid = $('#add_bookid').val();
         var name = $("#add_name").val();
         var content = $('#add_content').val();
@@ -54,13 +59,13 @@ $(document).ready(function(){
                         .append(
                             $("<div>")
                                 .attr(
-                                    "class","col-2 time align-bottom",
+                                    "class","col-auto time align-bottom",
                                     "id","msg_time",
                                 )
                                 .text(myDate),
                             $("<div>")
                                 .attr(
-                                    "class","col-1",
+                                    "class","col-auto",
                                 )
                                 .append(
                                     $("<button>")
@@ -75,7 +80,7 @@ $(document).ready(function(){
                                 ),
                             $("<div>")
                                 .attr(
-                                    "class","col-1",
+                                    "class","col-auto",
                                 )
                                 .append(
                                     $("<button>")

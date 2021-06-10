@@ -11,13 +11,19 @@ $(document).ready(function () {
 
     //借書
     $("#book").on("click", "#borrow_btn", function () {
-        name = $(this).parents(".card").find("h4").text();
+        username = $('#username').text();
+        if(username == ""){
+            alert('無法借閱，請先登入');
+            return 0
+        }
+        bookname = $(this).parents(".card").find("h4").text();
         var myDate = new Date().toLocaleString();
         $.ajax({
             url: "http://localhost:5000/borrowBook",
             type: 'POST',
             data: {
-                'bookname': name,
+                'username': username,
+                'bookname': bookname,
                 'time': myDate
             }
         })
@@ -29,35 +35,66 @@ $(document).ready(function () {
     })
 
     $("table").on("click", "#borrow_btn", function () {
-        name = $(this).parents("tbody").find(".fs-2").text();
+        username = $('#username').text();
+        if(username == ""){
+            alert('無法借閱，請先登入');
+            return 0
+        }
+        bookname = $(this).parents("tbody").find(".fs-2").text();
         var myDate = new Date().toLocaleString();
         $.ajax({
             url: "http://localhost:5000/borrowBook",
             type: 'POST',
             data: {
-                'bookname': name,
+                'username': username,
+                'bookname': bookname,
                 'time': myDate
             }
         })
         $(this).attr("hidden", true);
         $(this).parents("tbody").find("#return_btn").attr("hidden", false)
-        console.log(name, myDate);
     })
 
     //還書
-    $("table").on("click", "#return_btn", function () {
-        name = $(this).parents("tbody").find(".fs-2").text();
+    $("#booktable").on("click", "#return_btn", function () {
+        username = $('#username').text();
+        if(username == ""){
+            alert('無法借閱，請先登入');
+            return 0
+        }
+        bookname = $(this).parents("tbody").find(".fs-2").text();
         var myDate = new Date().toLocaleString();
         $.ajax({
             url: "http://localhost:5000/returnBook",
             type: 'POST',
             data: {
-                'bookname': name,
+                'username': username,
+                'bookname': bookname,
                 'time': myDate
             }
         })
         $(this).attr("hidden", true);
         $(this).parents("tbody").find("#borrow_btn").attr("hidden", false)
-        console.log(name, myDate);
+    })
+
+    $("#returntable").on("click", "#return_btn", function () {
+        username = $('#username').text();
+        if(username == ""){
+            alert('無法借閱，請先登入');
+            return 0
+        }
+        bookname = $(this).parents("tr").children(".bookname").text();
+        var myDate = new Date().toLocaleString();
+        $.ajax({
+            url: "http://localhost:5000/returnBook",
+            type: 'POST',
+            data: {
+                'username': username,
+                'bookname': bookname,
+                'time': myDate
+            }
+        })
+        $(this).parents("tr").remove();
+
     })
 })

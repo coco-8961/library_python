@@ -51,7 +51,7 @@
         {% else %}
         <div class="row justify-content-end">
             <div class="col-auto">
-                {{username}} 你好~歡迎來到子傑圖書室
+                <span id="username">{{username}}</span> 你好~歡迎來到子傑圖書室
             </div>
             <div class="col-auto align-self-end">
 			    <a href="/logout">登出</a>
@@ -83,16 +83,20 @@
                   <input type="text" class="form-control" placeholder="書名搜尋" aria-label="關鍵字搜尋" aria-describedby="button-addon2" name="searchkey">
                   <button class="btn btn-outline-secondary" type="submit" id="search_bt">搜尋</button>
                 </form>
-                <section class="row row-cols-4">
+                <section class="row row-cols-4" id="book">
                     {% for data in itemData%}
                     <div class="card col book_card">
                         <a href="/book?bookId={{data[0]}}" style="text-decoration:none;" title='{{data[1]}}'>
                             <img src={{ url_for('static', filename= data[7]) }} class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h4 class="fs-5 text-truncate text-center"> {{data[1]}}</h4>
-                                <p class="card-text">作者......</p>
                             </div>
                         </a>
+                        {% if data[8] == None %}
+                        <button type="button" class="btn btn-outline-primary" id="borrow_btn">借閱</button>
+                        {% else %}
+                        <button type="button" class="btn btn-outline-secondary" disabled>已借閱</button>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </section>

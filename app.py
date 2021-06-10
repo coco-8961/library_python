@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request, session,  redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
 
 app.secret_key = 'fkdjsafjdkfdlkjfadskjfadskljdsfklj'
 
-#Open database
+# Open database
 conn = sqlite3.connect('database.db')
 c = conn.cursor()
+
 
 @app.route('/')
 def index():
@@ -22,12 +23,12 @@ def index():
     print(loginTF)
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        cur.execute('SELECT * FROM book')
+        cur.execute('SELECT * FROM book LIMIT 8')
         itemData = cur.fetchall()
-    print(itemData)
     return render_template("index.html", itemData=itemData, loginTF=loginTF, username=username)
 
-@app.route('/login', methods = ['POST'])
+
+@app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
@@ -39,17 +40,18 @@ def login():
             print(error)
             return redirect(url_for('index'))
 
+
 @app.route('/logout')
 def logout():
-   # remove the username from the session if it is there
-   session.pop('name', None)
-   return redirect(url_for('index'))
+    # remove the username from the session if it is there
+    session.pop('name', None)
+    return redirect(url_for('index'))
 
 
-@app.route("/adduser", methods = ['POST'])
+@app.route("/adduser", methods=['POST'])
 def adduser():
     if request.method == 'POST':
-        #Parse form data
+        # Parse form data
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
@@ -61,6 +63,7 @@ def adduser():
 
         return redirect(url_for('index'))
 
+
 def is_valid(email, password):
     with sqlite3.connect('database.db') as con:
         cur = con.cursor()
@@ -69,12 +72,15 @@ def is_valid(email, password):
         for row in data:
             if row[1] == email and row[2] == password:
                 session['name'] = row[0]
+                print(session.get('name'))
                 return True
     return False
+
 
 @app.route('/register')
 def register():
     return render_template("register.html")
+
 
 @app.route('/mybook')
 def mybook():
@@ -86,9 +92,11 @@ def mybook():
         loginTF = False
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        cur.execute('SELECT * FROM borrowList')
+        cur.execute('SELECT * FROM borrowList WHERE `username` = ?', [username])
         itemData = cur.fetchall()
+
     return render_template("mybook.html", itemData=itemData, loginTF=loginTF, username=username)
+
 
 @app.route('/search')
 def search():
@@ -109,6 +117,7 @@ def search():
         itemData = cur.fetchall()
     return render_template("search.html", itemData=itemData, loginTF=loginTF, username=username)
 
+
 @app.route('/about')
 def about():
     if 'name' in session:
@@ -119,6 +128,7 @@ def about():
         loginTF = False
     return render_template("about.html", loginTF=loginTF, username=username)
 
+
 @app.route('/rule')
 def rule():
     if 'name' in session:
@@ -128,6 +138,7 @@ def rule():
         username = ""
         loginTF = False
     return render_template("rule.html", loginTF=loginTF, username=username)
+
 
 @app.route('/book')
 def book():
@@ -140,32 +151,36 @@ def book():
     bookId = request.args.get("bookId")
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        cur.execute('SELECT * FROM book where `id`='+bookId)
+        cur.execute('SELECT * FROM book where `id`=?', [bookId])
         itemData = cur.fetchall()
-        cur.execute('SELECT * FROM comment where `bookId`=? ORDER BY `commentId` DESC ', (bookId))
+        cur.execute('SELECT * FROM comment where `bookId`=? ORDER BY `commentId` DESC ', [bookId])
         comment = cur.fetchall()
     return render_template("book.html", itemData=itemData, comment=comment, loginTF=loginTF, username=username)
 
-@app.route('/comment/delete',methods=['POST'])
+
+@app.route('/comment/delete', methods=['POST'])
 def delete_comment():
     commentId = request.values['commentId']
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        cur.execute('DELETE FROM comment where `commentId`='+commentId)
-    return "delete comment"+commentId
+        cur.execute('DELETE FROM comment where `commentId`=' + commentId)
+    return "delete comment" + commentId
 
-@app.route('/comment/edit',methods=['POST'])
+
+@app.route('/comment/edit', methods=['POST'])
 def edit_comment():
     commentId = request.values['commentId']
     name = request.values['name']
     message = request.values['message']
     time = request.values['time']
+    print(commentId, name, message)
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('UPDATE comment SET name = ?, message = ? where `commentId` = ?', (name, message, commentId))
-    return "edit comment"+commentId
+    return "edit comment" + commentId
 
-@app.route('/comment/add',methods=['POST'])
+
+@app.route('/comment/add', methods=['POST'])
 def add_comment():
     bookId = request.values['bookId']
     name = request.values['name']
@@ -177,27 +192,31 @@ def add_comment():
         cur.execute('INSERT INTO comment(bookId, name, message, time) VALUES (?,?,?,?)', (bookId, name, message, time))
     return "add comment"
 
-@app.route('/borrowBook',methods=['POST'])
+
+@app.route('/borrowBook', methods=["GET", 'POST'])
 def borrowBook():
-    username = "柯建亨"
+    username = request.values['username']
     bookname = request.values['bookname']
     borrowTime = request.values['time']
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('UPDATE book SET status = ? where `name` = ?', (username, bookname))
         cur.execute('INSERT INTO borrowList (username, bookname, borrowTime) VALUES (?, ?, ?)', (username, bookname, borrowTime))
-    return "borrowBook"+bookname
+    return "borrowBook" + bookname
 
-@app.route('/returnBook',methods=['POST'])
+
+@app.route('/returnBook', methods=['POST'])
 def returnBook():
-    username = "柯建亨"
+    username = request.values['username']
     bookname = request.values['bookname']
     returnTime = request.values['time']
+    print(username, bookname, returnTime)
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('UPDATE book SET status = ? where `name` = ?', (None, bookname))
         cur.execute('UPDATE borrowList SET returnTime = ? where `bookname` = ?', (returnTime, bookname))
-    return "returnBook"+bookname
+    return "returnBook" + bookname
 
-if __name__== '__main__':
+
+if __name__ == '__main__':
     app.run(debug=True)
