@@ -86,7 +86,7 @@
                 <section class="row row-cols-4" id="book">
                     {% for data in itemData%}
                     <div class="card col book_card">
-                        <a href="/book?bookId={{data[0]}}" style="text-decoration:none;" title='{{data[1]}}'>
+                        <a href="/book/{{data[0]}}" style="text-decoration:none;" title='{{data[1]}}'>
                             <img src={{ url_for('static', filename= data[7]) }} class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h4 class="fs-5 text-truncate text-center"> {{data[1]}}</h4>

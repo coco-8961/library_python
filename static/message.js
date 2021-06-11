@@ -1,103 +1,103 @@
 $(document).ready(function(){
     var id=0;
     //新增
-    $("#addmsg").click(function(){
-        //取彈跳視窗input的值
-        username = $('#username').text();
-        if(username == ""){
-            alert('無法留言，請先登入');
-            return 0
-        }
-        var bookid = $('#add_bookid').val();
-        var name = $("#add_name").val();
-        var content = $('#add_content').val();
-        var myDate = new Date().toLocaleString();
-        console.log(name,content,myDate);
-        //新增內文
-        id++;
-        $.ajax({
-                url:"http://localhost:5000/comment/add",
-                type:'POST',
-                data:{
-                    'commentId':id,
-                    'bookId':bookid,
-                    'name':name,
-                    'message':content,
-                    'time':myDate,
-                }
-            })
-        $("#allmessage").prepend(
-            $("<div>")
-                .attr({
-                    "id":"message",
-                })
-                .append(
-                    $("<div>")
-                        .attr(
-                            "id","msg_id",
-                        )
-                        .text(id),
-                    $("<div>")
-                        .attr(
-                            "id","book_id",
-                        )
-                        .text(bookid),
-                    $("<div>")
-                        .attr(
-                            "id","msg_name",
-                        )
-                        .text(name),
-                    $("<p>")
-                        .attr(
-                            "id","msg_content",
-                        )
-                        .text(content),
-                    $("<div>")
-                        .attr(
-                            "class","row align-items-center",
-                        )
-                        .append(
-                            $("<div>")
-                                .attr(
-                                    "class","col-auto time align-bottom",
-                                    "id","msg_time",
-                                )
-                                .text(myDate),
-                            $("<div>")
-                                .attr(
-                                    "class","col-auto",
-                                )
-                                .append(
-                                    $("<button>")
-                                        .attr({
-                                            "type":"button",
-                                            "class":"btn btn-warning",
-                                            "id":"bt_edit",
-                                            "data-bs-toggle":"modal",
-                                            "data-bs-target":"#editModal",
-                                        })
-                                        .text("編輯"),
-                                ),
-                            $("<div>")
-                                .attr(
-                                    "class","col-auto",
-                                )
-                                .append(
-                                    $("<button>")
-                                        .attr({
-                                            "type":"button",
-                                            "class":"btn btn-danger",
-                                            "id":"bt_del",
-                                        })
-                                        .text("刪除"),
-                                ),
-                        )
-            )
-        )
-        //清空input的值
-        $("#add_name").val("");
-        $("#add_content").val("");
-    })
+    // $("#addmsg").click(function(){
+    //     //取彈跳視窗input的值
+    //     username = $('#username').text();
+    //     if(username == ""){
+    //         alert('無法留言，請先登入');
+    //         return 0
+    //     }
+    //     var bookid = $('#add_bookid').val();
+    //     var name = $("#add_name").val();
+    //     var content = $('#add_content').val();
+    //     var myDate = new Date().toLocaleString();
+    //     console.log(name,content,myDate);
+    //     //新增內文
+    //     id++;
+    //     // $.ajax({
+    //     //         url:"http://localhost:5000/comment/add",
+    //     //         type:'POST',
+    //     //         data:{
+    //     //             'commentId':id,
+    //     //             'bookId':bookid,
+    //     //             'name':name,
+    //     //             'message':content,
+    //     //             'time':myDate,
+    //     //         }
+    //     //     })
+    //     $("#allmessage").prepend(
+    //         $("<div>")
+    //             .attr({
+    //                 "id":"message",
+    //             })
+    //             .append(
+    //                 $("<div>")
+    //                     .attr(
+    //                         "id","msg_id",
+    //                     )
+    //                     .text(id),
+    //                 $("<div>")
+    //                     .attr(
+    //                         "id","book_id",
+    //                     )
+    //                     .text(bookid),
+    //                 $("<div>")
+    //                     .attr(
+    //                         "id","msg_name",
+    //                     )
+    //                     .text(name),
+    //                 $("<p>")
+    //                     .attr(
+    //                         "id","msg_content",
+    //                     )
+    //                     .text(content),
+    //                 $("<div>")
+    //                     .attr(
+    //                         "class","row align-items-center",
+    //                     )
+    //                     .append(
+    //                         $("<div>")
+    //                             .attr(
+    //                                 "class","col-auto time align-bottom",
+    //                                 "id","msg_time",
+    //                             )
+    //                             .text(myDate),
+    //                         $("<div>")
+    //                             .attr(
+    //                                 "class","col-auto",
+    //                             )
+    //                             .append(
+    //                                 $("<button>")
+    //                                     .attr({
+    //                                         "type":"button",
+    //                                         "class":"btn btn-warning",
+    //                                         "id":"bt_edit",
+    //                                         "data-bs-toggle":"modal",
+    //                                         "data-bs-target":"#editModal",
+    //                                     })
+    //                                     .text("編輯"),
+    //                             ),
+    //                         $("<div>")
+    //                             .attr(
+    //                                 "class","col-auto",
+    //                             )
+    //                             .append(
+    //                                 $("<button>")
+    //                                     .attr({
+    //                                         "type":"button",
+    //                                         "class":"btn btn-danger",
+    //                                         "id":"bt_del",
+    //                                     })
+    //                                     .text("刪除"),
+    //                             ),
+    //                     )
+    //         )
+    //     )
+    //     //清空input的值
+    //     $("#add_name").val("");
+    //     $("#add_content").val("");
+    // })
 
     //刪除
     $("#allmessage").on("click","#bt_del",function(){

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from datetime import datetime
 import sqlite3
 
 app = Flask(__name__)
@@ -26,7 +27,6 @@ def index():
         cur.execute('SELECT * FROM book LIMIT 8')
         itemData = cur.fetchall()
     return render_template("index.html", itemData=itemData, loginTF=loginTF, username=username)
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -140,20 +140,20 @@ def rule():
     return render_template("rule.html", loginTF=loginTF, username=username)
 
 
-@app.route('/book')
-def book():
+@app.route('/book/<id>')
+def book(id):
     if 'name' in session:
         username = session['name']
         loginTF = True
     else:
         username = ""
         loginTF = False
-    bookId = request.args.get("bookId")
+    # bookId = request.args.get("bookId")
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        cur.execute('SELECT * FROM book where `id`=?', [bookId])
+        cur.execute('SELECT * FROM book where `id`=?', [id])
         itemData = cur.fetchall()
-        cur.execute('SELECT * FROM comment where `bookId`=? ORDER BY `commentId` DESC ', [bookId])
+        cur.execute('SELECT * FROM comment where `bookId`=? ORDER BY `commentId` DESC ', [id])
         comment = cur.fetchall()
     return render_template("book.html", itemData=itemData, comment=comment, loginTF=loginTF, username=username)
 
@@ -185,12 +185,13 @@ def add_comment():
     bookId = request.values['bookId']
     name = request.values['name']
     message = request.values['message']
-    time = request.values['time']
+    time = datetime.now()
 
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('INSERT INTO comment(bookId, name, message, time) VALUES (?,?,?,?)', (bookId, name, message, time))
-    return "add comment"
+    print("add comment")
+    return redirect(url_for('book', id=bookId))
 
 
 @app.route('/borrowBook', methods=["GET", 'POST'])

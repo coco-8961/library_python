@@ -151,6 +151,7 @@
 
                     <div class="row align-items-center">
                         <div class="col-auto time align-bottom" id="msg_time">{{data[4]}}</div>
+                        {% if data[8] == username %}
                         <div class="col-auto">
                             <button type="button" class="btn btn-warning" id="bt_edit" data-bs-toggle="modal"
                                     data-bs-target="#editModal">編輯
@@ -159,37 +160,27 @@
                         <div class="col-auto">
                             <button type="button" class="btn btn-danger" id="bt_del">刪除</button>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
-
-                <div id="message">
-                    <div id="msg_name">
-                        王大明：
-                    </div>
-                    <p id="msg_content">
-                        鞋子 很好穿 尺寸剛剛好 下訂隔一天就收到貨了 出貨非常快 用卷折抵很划算☺️☺️☺️☺️☺️☺️☺️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
-                    </p>
-
-                    <div class="row align-items-center">
-                        <div class="col-2 time align-bottom" id="msg_time">
-                            2020/8/4 下午10:26:28
-                        </div>
-                        <div class="col-1">
-                            <button type="button" class="btn btn-warning" id="bt_edit" data-bs-toggle="modal"
-                                    data-bs-target="#editModal">編輯
-                            </button>
-                        </div>
-                        <div class="col-1">
-                            <button type="button" class="btn btn-danger" id="bt_del">刪除</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     </div>
 </div>
 <!-- -------------------- -->
+{% if not loginTF %}
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">請先登入，在留言</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
 <!-- 新增的彈跳視窗 -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -198,27 +189,28 @@
                 <h5 class="modal-title" id="addModalLabel">新增留言</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form>
+            <form action="/comment/add" method="post">
+                <div class="modal-body">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">暱稱：</label>
-                        <input type="hidden" name="bookid" class="form-control" id="add_bookid"
+                        <input type="hidden" name="bookId" class="form-control" id="add_bookid"
                                value={{itemData[0][0]}}>
                         <input type="text" name="name" class="form-control" id="add_name">
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">留言內容：</label>
-                        <textarea class="form-control" name="content" id="add_content"></textarea>
+                        <textarea class="form-control" name="message" id="add_content"></textarea>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addmsg">送出</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
+                    <input type="submit" class="btn btn-primary" id="addmsg" value="送出">
+                </div>
+            </form>
         </div>
     </div>
 </div>
+{% endif %}
 <!-- 編輯的彈跳視窗 -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
