@@ -38,7 +38,7 @@ def login():
         else:
             error = 'Invalid UserId / Password'
             print(error)
-            return redirect(url_for('index'), error=error)
+            return "帳號或密碼錯誤"
 
 @app.route('/logout')
 def logout():
