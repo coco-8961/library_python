@@ -1366,61 +1366,61 @@
     </column>
     <column id="502" parent="170" name="picture">
       <Position>8</Position>
-      <DataType>char(100)|0s</DataType>
+      <DataType>char(255)|0s</DataType>
     </column>
     <column id="503" parent="170" name="status">
       <Position>9</Position>
       <DataType>char(255)|0s</DataType>
     </column>
-    <column id="504" parent="170" name="count">
-      <Position>10</Position>
-      <DataType>INTEGER|0s</DataType>
-    </column>
-    <column id="505" parent="171" name="id">
+    <column id="504" parent="171" name="id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="506" parent="171" name="username">
+    <column id="505" parent="171" name="username">
       <Position>2</Position>
-      <DataType>char(255)|0s</DataType>
+      <DataType>char(50)|0s</DataType>
     </column>
-    <column id="507" parent="171" name="bookname">
+    <column id="506" parent="171" name="bookname">
       <Position>3</Position>
       <DataType>char(255)|0s</DataType>
     </column>
-    <column id="508" parent="171" name="borrowTime">
+    <column id="507" parent="171" name="borrowTime">
       <Position>4</Position>
       <DataType>char(255)|0s</DataType>
     </column>
-    <column id="509" parent="171" name="returnTime">
+    <column id="508" parent="171" name="returnTime">
       <Position>5</Position>
       <DataType>char(255)|0s</DataType>
     </column>
-    <key id="510" parent="171">
+    <key id="509" parent="171">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="511" parent="172" name="commentId">
+    <column id="510" parent="172" name="commentId">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="512" parent="172" name="bookId">
+    <column id="511" parent="172" name="bookId">
       <Position>2</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="513" parent="172" name="name">
+    <column id="512" parent="172" name="name">
       <Position>3</Position>
       <DataType>char(50)|0s</DataType>
     </column>
-    <column id="514" parent="172" name="message">
+    <column id="513" parent="172" name="message">
       <Position>4</Position>
-      <DataType>char(50)|0s</DataType>
+      <DataType>char(255)|0s</DataType>
     </column>
-    <column id="515" parent="172" name="time">
+    <column id="514" parent="172" name="time">
       <Position>5</Position>
       <DataType>char(50)|0s</DataType>
+    </column>
+    <column id="515" parent="172" name="username">
+      <Position>6</Position>
+      <DataType>char(255)|0s</DataType>
     </column>
     <key id="516" parent="172">
       <ColNames>commentId</ColNames>

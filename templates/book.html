@@ -151,7 +151,7 @@
 
                     <div class="row align-items-center">
                         <div class="col-auto time align-bottom" id="msg_time">{{data[4]}}</div>
-                        {% if data[8] == username %}
+                        {% if data[5] == username %}
                         <div class="col-auto">
                             <button type="button" class="btn btn-warning" id="bt_edit" data-bs-toggle="modal"
                                     data-bs-target="#editModal">編輯
@@ -190,6 +190,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/comment/add" method="post">
+                <input type="hidden" name="username" value={{username}}>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">暱稱：</label>

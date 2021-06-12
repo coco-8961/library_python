@@ -106,7 +106,7 @@ $(document).ready(function(){
         var del=confirm("確定刪除？");
         if(del==true){
             $.ajax({
-                url:"http://localhost:5000/comment/delete",
+                url:"/comment/delete",
                 type:'POST',
                 data:{
                     'commentId':id,
@@ -137,7 +137,7 @@ $(document).ready(function(){
         console.log(editname,editcontent,editmyDate);
         //變更內容
         $.ajax({
-            url:"http://localhost:5000/comment/edit",
+            url:"/comment/edit",
             type:'POST',
             data:{
                 'commentId':edit_id,

@@ -35,6 +35,7 @@
                 <label for="">帳號</label>
                 <input type="text" name="email">
             </div>
+
             <div class="col-auto">
                 <label for="">密碼</label>
                 <input type="password" name="password">
@@ -68,7 +69,7 @@
                 <a href="/search" style="text-decoration:none;">書籍查詢</a>
             </div>
             <div class="col-3 text-center fs-2">
-                <a href="about" style="text-decoration:none;">關於我們</a>
+                <a href="/about" style="text-decoration:none;">關於我們</a>
             </div>
             <div class="col-3 text-center fs-2">
                 <a href="/rule" style="text-decoration:none;">借書規章</a>
@@ -77,19 +78,19 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-9" id="book">
                 <h2>書籍查詢</h2>
                 <form class="input-group mb-3" action="/search">
                   <input type="text" class="form-control" placeholder="書名搜尋" aria-label="關鍵字搜尋" aria-describedby="button-addon2" name="searchkey">
                   <button class="btn btn-outline-secondary" type="submit" id="search_bt">搜尋</button>
                 </form>
-                <section class="row row-cols-4" id="book">
+                <section class="row row-cols-4">
                     {% for data in itemData%}
                     <div class="card col book_card">
                         <a href="/book/{{data[0]}}" style="text-decoration:none;" title='{{data[1]}}'>
                             <img src={{ url_for('static', filename= data[7]) }} class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h4 class="fs-5 text-truncate text-center"> {{data[1]}}</h4>
+                                <h4 class="fs-5 text-truncate text-center">{{data[1]}}</h4>
                             </div>
                         </a>
                         {% if data[8] == None %}

@@ -38,8 +38,7 @@ def login():
         else:
             error = 'Invalid UserId / Password'
             print(error)
-            return redirect(url_for('index'))
-
+            return redirect(url_for('index'), error=error)
 
 @app.route('/logout')
 def logout():
@@ -111,7 +110,7 @@ def search():
         print(searchkey)
         cur = conn.cursor()
         if (searchkey != None):
-            cur.execute("SELECT * FROM book where `name` LIKE ?", (f'%{searchkey}%',))
+            cur.execute("SELECT * FROM book where `name` LIKE ?", ('%'+searchkey+'%',))
         else:
             cur.execute("SELECT * FROM book ")
         itemData = cur.fetchall()
@@ -172,7 +171,6 @@ def edit_comment():
     commentId = request.values['commentId']
     name = request.values['name']
     message = request.values['message']
-    time = request.values['time']
     print(commentId, name, message)
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
@@ -182,6 +180,7 @@ def edit_comment():
 
 @app.route('/comment/add', methods=['POST'])
 def add_comment():
+    username = request.values['username']
     bookId = request.values['bookId']
     name = request.values['name']
     message = request.values['message']
@@ -189,7 +188,7 @@ def add_comment():
 
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        cur.execute('INSERT INTO comment(bookId, name, message, time) VALUES (?,?,?,?)', (bookId, name, message, time))
+        cur.execute('INSERT INTO comment(bookId, name, message, time, username) VALUES (?,?,?,?,?)', (bookId, name, message, time, username))
     print("add comment")
     return redirect(url_for('book', id=bookId))
 
@@ -199,6 +198,7 @@ def borrowBook():
     username = request.values['username']
     bookname = request.values['bookname']
     borrowTime = request.values['time']
+    print(username, bookname, borrowTime)
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('UPDATE book SET status = ? where `name` = ?', (username, bookname))
